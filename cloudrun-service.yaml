@@ -10,9 +10,9 @@ spec:
         autoscaling.knative.dev/maxScale: "10"
     spec:
       containers:
-        - image: us-central1-docker.pkg.dev/PROJECT_ID/cre-demo/cre-analyzer-agent:latest
+        - image: us-central1-docker.pkg.dev/ccibt-hack25ww7-727/loan-app-docker/cre-analyzer-agent:v1.1
           ports:
-            - containerPort: 8080
+            - containerPort: 8082
           env:
             - name: GCP_PROJECT_ID
               value: "PROJECT_ID"
