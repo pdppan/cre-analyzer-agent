@@ -65,7 +65,7 @@
 </head>
 <body>
 <header>
-  <h1>Commercial Real Estate Analyzer – GCP Agent Demo</h1>
+  <h1>Commercial Real Estate Analyzer – by AI-lluminati</h1>
 </header>
 
 <main>
@@ -112,6 +112,16 @@
 
         <button class="primary" onclick="run()">Generate Deal Memo</button>
         <div id="status" class="status">Ready</div>
+
+        <!-- Progress Bar (shown while backend runs) -->
+        <div id="progressContainer" style="display:none; margin-top:12px;">
+          <div style="font-size:12px; margin-bottom:6px;">
+            Processing… <span id="progressPercent">0%</span>
+          </div>
+          <div style="width:100%; background:#e5e7eb; border-radius:6px; overflow:hidden;">
+            <div id="progressBar" style="width:0%; height:10px; background:#1363a5; transition: width 0.3s ease;"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -150,6 +160,57 @@
 </main>
 
 <script>
+let progressInterval = null;
+let progressValue = 0;
+
+function startProgressBar(){
+  progressValue = 0;
+  const pc = document.getElementById("progressContainer");
+  const pb = document.getElementById("progressBar");
+  const pp = document.getElementById("progressPercent");
+  if(!pc || !pb || !pp) return;
+
+  pb.style.width = "0%";
+  pp.textContent = "0%";
+  pc.style.display = "block";
+
+  if(progressInterval) clearInterval(progressInterval);
+  progressInterval = setInterval(() => {
+    // Simulate progress up to 90% while the backend is running
+    if (progressValue < 90) {
+      progressValue += Math.floor(Math.random() * 5) + 1;
+      if (progressValue > 90) progressValue = 90;
+      pb.style.width = progressValue + "%";
+      pp.textContent = progressValue + "%";
+    }
+  }, 400);
+}
+
+function stopProgressBar(){
+  const pc = document.getElementById("progressContainer");
+  const pb = document.getElementById("progressBar");
+  const pp = document.getElementById("progressPercent");
+  if(!pc || !pb || !pp) return;
+
+  if(progressInterval){
+    clearInterval(progressInterval);
+    progressInterval = null;
+  }
+
+  // Complete to 100% and then hide
+  pb.style.width = "100%";
+  pp.textContent = "100%";
+  setTimeout(() => { pc.style.display = "none"; }, 450);
+}
+
+function setRunEnabled(enabled){
+  const btn = document.querySelector('button.primary[onclick="run()"]');
+  if(!btn) return;
+  btn.disabled = !enabled;
+  btn.style.opacity = enabled ? "1" : "0.7";
+  btn.style.cursor = enabled ? "pointer" : "not-allowed";
+}
+
 function payload(){
   return {
     dealId: dealId.value,
@@ -190,6 +251,8 @@ function renderSummary(p){
 }
 
 async function run(){
+  setRunEnabled(false);
+  startProgressBar();
   status.textContent="Calling agent...";
   status.className="status";
   try{
@@ -220,6 +283,9 @@ async function run(){
   }catch(e){
     status.textContent="Error: "+e;
     status.className="status err";
+  }finally{
+    stopProgressBar();
+    setRunEnabled(true);
   }
 }
 </script>
