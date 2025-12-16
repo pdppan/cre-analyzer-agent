@@ -1,0 +1,23 @@
+server:
+  port: 8080
+
+app:
+  # true => demo runs without any external calls (mock data + mock LLM)
+  # false => uses Vertex AI client and any real provider implementations you wire
+  mockMode: false
+
+gcp:
+  projectId: ${GCP_PROJECT_ID:ccibt-hack25ww7-727}
+  location: ${GCP_LOCATION:us-central1}
+  vertexModel: ${VERTEX_MODEL:gemini-1.5-flash}
+
+spring:
+  cache:
+    type: simple
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+

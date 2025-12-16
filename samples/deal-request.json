@@ -1,0 +1,25 @@
+{
+  "dealId": "WF-DEMO-001",
+  "borrowerName": "Acme Real Estate Holdings LLC",
+  "property": {
+    "address": "201 S Tryon St, Charlotte, NC 28202",
+    "propertyType": "Office",
+    "yearBuilt": 2008,
+    "netRentableSqFt": 185000,
+    "occupancyPct": 0.86,
+    "noiAnnual": 8200000,
+    "capexHoldback": 750000
+  },
+  "loan": {
+    "requestedLoanAmount": 65000000,
+    "interestRatePct": 0.0675,
+    "amortizationYears": 25,
+    "termYears": 7,
+    "dscrCovenant": 1.25
+  },
+  "assumptions": {
+    "stressVacancyAddlPct": 0.08,
+    "stressNoiDownPct": 0.12,
+    "exitCapRatePct": 0.075
+  }
+}

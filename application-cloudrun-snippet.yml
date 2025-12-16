@@ -1,0 +1,9 @@
+# IMPORTANT for Cloud Run:
+# Cloud Run injects the listening port via the PORT env var.
+# Use this in src/main/resources/application.yml:
+server:
+  port: ${PORT:8080}
+
+# Optional: allow mock mode override via env var
+app:
+  mockMode: ${APP_MOCKMODE:true}

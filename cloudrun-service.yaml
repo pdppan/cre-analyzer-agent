@@ -1,0 +1,29 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: cre-analyzer-agent
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/client-name: "hackathon"
+        autoscaling.knative.dev/maxScale: "10"
+    spec:
+      containers:
+        - image: us-central1-docker.pkg.dev/PROJECT_ID/cre-demo/cre-analyzer-agent:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: GCP_PROJECT_ID
+              value: "PROJECT_ID"
+            - name: GCP_LOCATION
+              value: "us-central1"
+            - name: VERTEX_MODEL
+              value: "gemini-1.5-flash"
+            - name: APP_MOCKMODE
+              value: "true"
+          # Recommended baseline resources for demos
+          resources:
+            limits:
+              cpu: "1"
+              memory: "512Mi"
