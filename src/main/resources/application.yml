@@ -9,7 +9,7 @@ app:
 gcp:
   projectId: ${GCP_PROJECT_ID:ccibt-hack25ww7-727}
   location: ${GCP_LOCATION:us-central1}
-  vertexModel: ${VERTEX_MODEL:gemini-1.5-flash}
+  vertexModel: ${VERTEX_MODEL:gemini-2.5-flash}
 
 spring:
   cache:
